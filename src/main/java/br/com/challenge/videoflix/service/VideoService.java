@@ -1,9 +1,11 @@
 package br.com.challenge.videoflix.service;
 
+import br.com.challenge.videoflix.dto.request.VideoRequestDto;
 import br.com.challenge.videoflix.dto.response.VideoResponseDto;
 import br.com.challenge.videoflix.entity.Video;
 import br.com.challenge.videoflix.repository.VideoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,13 @@ public class VideoService {
 
     public VideoResponseDto buscarPorId(Long id) {
         Video entidade = repository.getReferenceById(id);
+        return VideoResponseDto.converteEntidadeParaDto(entidade);
+    }
+
+    public VideoResponseDto cadastrar(VideoRequestDto dto) {
+        Video entidade = new Video();
+        BeanUtils.copyProperties(dto, entidade);
+        repository.save(entidade);
         return VideoResponseDto.converteEntidadeParaDto(entidade);
     }
 
