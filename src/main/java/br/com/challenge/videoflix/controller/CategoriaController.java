@@ -39,4 +39,10 @@ public class CategoriaController {
         return ResponseEntity.ok(service.atualizar(id, dto));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity excluir(@PathVariable Long id) {
+        service.excluir(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

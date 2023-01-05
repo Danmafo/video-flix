@@ -18,6 +18,10 @@ public class Video {
     @Column(name = "url", length = 200)
     private String url;
 
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
     public Video() {
     }
 
@@ -54,4 +58,13 @@ public class Video {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+    
 }
