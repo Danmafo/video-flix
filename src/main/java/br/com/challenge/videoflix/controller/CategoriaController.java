@@ -1,5 +1,6 @@
 package br.com.challenge.videoflix.controller;
 
+import br.com.challenge.videoflix.dto.request.CategoriaAtualizacaoRequestDto;
 import br.com.challenge.videoflix.dto.request.CategoriaCadastroRequestDto;
 import br.com.challenge.videoflix.dto.response.CategoriaResponseDto;
 import br.com.challenge.videoflix.service.CategoriaService;
@@ -31,6 +32,11 @@ public class CategoriaController {
     @PostMapping
     public ResponseEntity<CategoriaResponseDto> cadastrar(@RequestBody @Valid CategoriaCadastroRequestDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(dto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoriaResponseDto> atualizar(@PathVariable Long id, @RequestBody @Valid CategoriaAtualizacaoRequestDto dto) {
+        return ResponseEntity.ok(service.atualizar(id, dto));
     }
 
 }

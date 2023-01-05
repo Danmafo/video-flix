@@ -1,5 +1,6 @@
 package br.com.challenge.videoflix.service;
 
+import br.com.challenge.videoflix.dto.request.CategoriaAtualizacaoRequestDto;
 import br.com.challenge.videoflix.dto.request.CategoriaCadastroRequestDto;
 import br.com.challenge.videoflix.dto.response.CategoriaResponseDto;
 import br.com.challenge.videoflix.dto.response.VideoResponseDto;
@@ -35,4 +36,12 @@ public class CategoriaService {
         repository.save(entidade);
         return CategoriaResponseDto.converteEntidadeParaDto(entidade);
     }
+
+    public CategoriaResponseDto atualizar(Long id, CategoriaAtualizacaoRequestDto dto) {
+        Categoria entidade = repository.getReferenceById(id);
+        return CategoriaResponseDto.converteEntidadeParaDto(
+                repository.save(CategoriaAtualizacaoRequestDto.atualizar(entidade, dto))
+        );
+    }
+
 }
