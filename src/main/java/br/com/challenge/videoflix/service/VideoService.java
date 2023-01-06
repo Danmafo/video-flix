@@ -5,13 +5,11 @@ import br.com.challenge.videoflix.dto.request.VideoCadastroRequestDto;
 import br.com.challenge.videoflix.dto.response.VideoResponseDto;
 import br.com.challenge.videoflix.entity.Video;
 import br.com.challenge.videoflix.repository.VideoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VideoService {
