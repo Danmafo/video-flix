@@ -19,13 +19,21 @@ public class VideoService {
 
     public List<VideoResponseDto> listar() {
         List<Video> listaEntidade = repository.findAll();
-        List<VideoResponseDto> listaDto = listaEntidade.stream().map(VideoResponseDto::converteEntidadeParaDto).toList();
+        List<VideoResponseDto> listaDto = listaEntidade.stream().map(VideoResponseDto::converteEntidadeParaDto)
+                .toList();
         return listaDto;
     }
 
     public VideoResponseDto buscarPorId(Long id) {
         Video entidade = repository.getReferenceById(id);
         return VideoResponseDto.converteEntidadeParaDto(entidade);
+    }
+
+    public List<VideoResponseDto> buscarPorIdCategoria(Long id) {
+        List<Video> listaEntidade = repository.findByCategoria_Id(id);
+        List<VideoResponseDto> listaDto = listaEntidade.stream().map(VideoResponseDto::converteEntidadeParaDto)
+                .toList();
+        return listaDto;
     }
 
     public VideoResponseDto cadastrar(VideoCadastroRequestDto dto) {
@@ -38,8 +46,7 @@ public class VideoService {
     public VideoResponseDto atualizar(Long id, VideoAtualizacaoRequestDto dto) {
         Video entidade = repository.getReferenceById(id);
         return VideoResponseDto.converteEntidadeParaDto(
-                repository.save(VideoAtualizacaoRequestDto.atualizar(entidade, dto))
-        );
+                repository.save(VideoAtualizacaoRequestDto.atualizar(entidade, dto)));
     }
 
     public void excluir(Long id) {
