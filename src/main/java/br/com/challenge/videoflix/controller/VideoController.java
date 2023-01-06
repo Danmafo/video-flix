@@ -34,6 +34,11 @@ public class VideoController {
         return ResponseEntity.ok(service.buscarPorIdCategoria(id));
     }
 
+    @GetMapping("/pesquisa")
+    public ResponseEntity<List<VideoResponseDto>> buscarPorTituloPesquisa(@RequestParam String pesquisa) {
+        return ResponseEntity.ok(service.buscarPorTituloPesquisa(pesquisa));
+    }
+
     @PostMapping
     public ResponseEntity<VideoResponseDto> cadastrar(@RequestBody @Valid VideoCadastroRequestDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(dto));

@@ -36,6 +36,13 @@ public class VideoService {
         return listaDto;
     }
 
+    public List<VideoResponseDto> buscarPorTituloPesquisa(String pesquisa) {
+        List<Video> listaEntidade = repository.findByTituloContainingIgnoreCase(pesquisa);
+        List<VideoResponseDto> listaDto = listaEntidade.stream().map(VideoResponseDto::converteEntidadeParaDto)
+                .toList();
+        return listaDto;
+    }
+
     public VideoResponseDto cadastrar(VideoCadastroRequestDto dto) {
         Video entidade = new Video();
         BeanUtils.copyProperties(dto, entidade);

@@ -10,4 +10,6 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 
     List<Video> findByCategoria_Id(Long id);
 
+    List<Video> findByTituloContainingIgnoreCase(String pesquisa);
+
 }
