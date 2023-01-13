@@ -15,29 +15,32 @@ import java.util.List;
 public class VideoService {
 
     @Autowired
-    VideoRepository repository;
+    VideoRepository videoRepository;
+
+    @Autowired
+    CategoriaService categoriaService;
 
     public List<VideoResponseDto> listar() {
-        List<Video> listaEntidade = repository.findAll();
+        List<Video> listaEntidade = videoRepository.findAll();
         List<VideoResponseDto> listaDto = listaEntidade.stream().map(VideoResponseDto::converteEntidadeParaDto)
                 .toList();
         return listaDto;
     }
 
     public VideoResponseDto buscarPorId(Long id) {
-        Video entidade = repository.getReferenceById(id);
+        Video entidade = videoRepository.getReferenceById(id);
         return VideoResponseDto.converteEntidadeParaDto(entidade);
     }
 
     public List<VideoResponseDto> buscarPorIdCategoria(Long id) {
-        List<Video> listaEntidade = repository.findByCategoria_Id(id);
+        List<Video> listaEntidade = videoRepository.findByCategoria_Id(id);
         List<VideoResponseDto> listaDto = listaEntidade.stream().map(VideoResponseDto::converteEntidadeParaDto)
                 .toList();
         return listaDto;
     }
 
     public List<VideoResponseDto> buscarPorTituloPesquisa(String pesquisa) {
-        List<Video> listaEntidade = repository.findByTituloContainingIgnoreCase(pesquisa);
+        List<Video> listaEntidade = videoRepository.findByTituloContainingIgnoreCase(pesquisa);
         List<VideoResponseDto> listaDto = listaEntidade.stream().map(VideoResponseDto::converteEntidadeParaDto)
                 .toList();
         return listaDto;
@@ -45,18 +48,25 @@ public class VideoService {
 
     public VideoResponseDto cadastrar(VideoCadastroRequestDto dto) {
         Video entidade = new Video();
-        BeanUtils.copyProperties(dto, entidade);
-        repository.save(entidade);
+
+        BeanUtils.copyProperties(dto, entidade, "idCategoria");
+        entidade.setCategoria(categoriaService.retornaCategoriaPorId(dto.idCategoria()));
+
+        videoRepository.save(entidade);
         return VideoResponseDto.converteEntidadeParaDto(entidade);
     }
 
     public VideoResponseDto atualizar(Long id, VideoAtualizacaoRequestDto dto) {
-        Video entidade = repository.getReferenceById(id);
-        return VideoResponseDto.converteEntidadeParaDto(
-                repository.save(VideoAtualizacaoRequestDto.atualizar(entidade, dto)));
+        Video entidade = videoRepository.getReferenceById(id);
+        entidade = VideoAtualizacaoRequestDto.atualizar(entidade, dto);
+
+        entidade.setCategoria(categoriaService.retornaCategoriaPorId(dto.idCategoria()));
+
+        return VideoResponseDto.converteEntidadeParaDto(videoRepository.save(entidade));
     }
 
     public void excluir(Long id) {
-        repository.deleteById(id);
+        videoRepository.deleteById(id);
     }
+
 }

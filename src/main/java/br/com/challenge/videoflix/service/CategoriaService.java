@@ -46,4 +46,15 @@ public class CategoriaService {
         repository.deleteById(id);
     }
 
+    public Categoria retornaCategoriaLivre() {
+        return repository.findById(1l).get();
+    }
+
+    public Categoria retornaCategoriaPorId(Long idCategoria) {
+        if (idCategoria != null) {
+            return repository.findById(idCategoria).get();
+        }
+        return repository.findById(1l).get();
+    }
+
 }

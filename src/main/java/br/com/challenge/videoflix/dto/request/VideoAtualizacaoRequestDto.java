@@ -1,13 +1,16 @@
 package br.com.challenge.videoflix.dto.request;
 
-import br.com.challenge.videoflix.dto.response.VideoResponseDto;
 import br.com.challenge.videoflix.entity.Video;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Size;
 
 public record VideoAtualizacaoRequestDto(
 
         @Size(max = 50, message = "O título do vídeo não pode ultrapassar {max} caracteres")
         String titulo,
+
+        @Max(value = 4, message = "O id da categora não pode ser maior que {value}")
+        Long idCategoria,
 
         @Size(max = 150, message = "A descrição do vídeo não pode ultrapassar {max} caracteres")
         String descricao,

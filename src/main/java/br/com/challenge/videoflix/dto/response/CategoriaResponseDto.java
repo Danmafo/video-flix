@@ -1,7 +1,6 @@
 package br.com.challenge.videoflix.dto.response;
 
 import br.com.challenge.videoflix.entity.Categoria;
-import br.com.challenge.videoflix.entity.Video;
 
 public record CategoriaResponseDto(
 
